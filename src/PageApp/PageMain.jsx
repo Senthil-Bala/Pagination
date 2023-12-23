@@ -10,21 +10,37 @@ function PageMain() {
   const [postsPerPage, setpostsPerPage] = useState(10);
   const [errorMessage, seterrorMessage] = useState(null);
 
-  useEffect(() => {
-    axios
-      .get(
-        "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
-      )
-      .then((res) => {
-        setdatas(res.data);
-        console.log(res.data);
-        seterrorMessage(null);
-      })
-      .catch((error) => {
-        console.log(error);
-        setdatas([]);
+  const getData = async()=>{
+    try{
+        let fetchingdata=await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
+        let jsonFormat=await fetchingdata.json();
+        setdatas(jsonFormat);
+        seterrorMessage(null)
+    }
+    catch(e){
+        console.log(e);
+        setdatas([])
         alert("failed to fetch data");
-      });
+    }
+  }
+
+  useEffect(() => {
+
+    getData();
+    // axios
+    //   .get(
+    //     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+    //   )
+    //   .then((res) => {
+    //     setdatas(res.data);
+    //     console.log(res.data);
+    //     seterrorMessage(null);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setdatas([]);
+    //     alert("failed to fetch data");
+    //   });
   }, []);
 
   // page per posts
