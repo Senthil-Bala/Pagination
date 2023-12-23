@@ -22,8 +22,8 @@ function PageMain() {
       })
       .catch((error) => {
         console.log(error);
-        setdatas(null);
-        seterrorMessage("failed to fetch data");
+        setdatas([]);
+        alert("failed to fetch data");
       });
   }, []);
 
@@ -31,7 +31,7 @@ function PageMain() {
 
   const lastIndex = postsPerPage * presentPage;
   const firstIndex = lastIndex - postsPerPage;
-  const currentPosts = datas.slice(firstIndex, lastIndex);
+  const currentPosts = datas?.slice(firstIndex, lastIndex);
 
   // pagination
 
@@ -40,7 +40,7 @@ function PageMain() {
   const paginate = (pageNumber) => {
     if (
       pageNumber >= 1 &&
-      pageNumber <= Math.ceil(datas.length / postsPerPage)
+      pageNumber <= Math.ceil(datas?.length / postsPerPage)
     ) {
       setpresentPage(pageNumber);
     }
