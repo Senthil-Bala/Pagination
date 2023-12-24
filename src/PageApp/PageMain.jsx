@@ -42,7 +42,7 @@ function PageMain() {
     //     setdatas([]);
     //     alert("failed to fetch data");
     //   });
-  }, []);
+  }, [datas]);
 
 
 //   useEffect(() => {
