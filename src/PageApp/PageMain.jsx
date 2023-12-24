@@ -10,39 +10,59 @@ function PageMain() {
   const [postsPerPage, setpostsPerPage] = useState(10);
   const [errorMessage, seterrorMessage] = useState(null);
 
-  const getData = async()=>{
-    try{
-        let fetchingdata=await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
-        let jsonFormat=await fetchingdata.json();
-        setdatas(jsonFormat);
-        seterrorMessage(null)
-    }
-    catch(e){
-        console.log(e);
-        setdatas([])
-        alert("failed to fetch data");
-    }
-  }
+  // const getData = async()=>{
+  //   try{
+  //       let fetchingdata=await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
+  //       let jsonFormat=await fetchingdata.json();
+  //       console.log(jsonFormat)
+  //       setdatas(jsonFormat);
+  //       seterrorMessage(null)
+  //   }
+  //   catch(e){
+  //       console.log(e);
+  //       setdatas([])
+  //       alert("failed to fetch data");
+  //   }
+  // }
+
+  // useEffect(() => {
+
+  //   getData();
+  //   // axios
+  //   //   .get(
+  //   //     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
+  //   //   )
+  //   //   .then((res) => {
+  //   //     setdatas(res.data);
+  //   //     console.log(res.data);
+  //   //     seterrorMessage(null);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.log(error);
+  //   //     setdatas([]);
+  //   //     alert("failed to fetch data");
+  //   //   });
+  // }, []);
+
 
   useEffect(() => {
 
-    getData();
-    // axios
-    //   .get(
-    //     "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
-    //   )
-    //   .then((res) => {
-    //     setdatas(res.data);
-    //     console.log(res.data);
-    //     seterrorMessage(null);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setdatas([]);
-    //     alert("failed to fetch data");
-    //   });
-  }, []);
+    axios.get('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json')
 
+        .then(response => {
+
+            setdatas(response.data);
+            console.log(response.data);
+
+        })
+
+        .catch(error => {
+
+            alert("Failed to fetch data")
+
+        });
+
+}, []);
   // page per posts
 
   const lastIndex = postsPerPage * presentPage;
@@ -72,7 +92,7 @@ function PageMain() {
         totalPosts={datas.length}
         postsPerPage={postsPerPage}
         currentPage={presentPage}
-      />{" "}
+      />
     </div>
   );
 }
